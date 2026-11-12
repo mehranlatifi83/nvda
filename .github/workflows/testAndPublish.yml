@@ -848,7 +848,7 @@ jobs:
     name: Post launcher to Telegram channel
     runs-on: ubuntu-latest
     needs: [createLauncher]
-    if: startsWith(github.ref_name, 'try-')
+    if: startsWith(github.ref_name, 'try-') || startsWith(github.ref_name, 'release-')
     steps:
     - name: Download launcher
       uses: actions/download-artifact@v7
