@@ -870,7 +870,7 @@ jobs:
         from telethon.sessions import StringSession
         from telethon.errors import TypeNotFoundError
         exe = [f for f in glob.glob("launcher/nvda*.exe")][0]
-        caption = "نسخه رسمی بر پایه NVDA 2026.3.1 با espeak نسخه 2025.2\n@mehran_latifi"
+        caption = "نسخه NVDA 2026.3.1 بر پایه espeak 2025.2\n@mehran_latifi"
         async def main():
             c = TelegramClient(StringSession(os.environ["TG_BOT_SESSION"]), int(os.environ["TG_API_ID"]), os.environ["TG_API_HASH"])
             await c.connect()
