@@ -2203,7 +2203,9 @@ class KeyboardSettingsPanel(SettingsPanel):
 		config.conf["keyboard"]["passNVDAModifierThroughOnDoublePress"] = (
 			self.passNVDAModifierThroughCheckBox.IsChecked()
 		)
-		config.conf["keyboard"]["reportInsertKeyPassThrough"] = self.reportInsertPassThroughCheckBox.IsChecked()
+		config.conf["keyboard"]["reportInsertKeyPassThrough"] = (
+			self.reportInsertPassThroughCheckBox.IsChecked()
+		)
 
 
 class MouseSettingsPanel(SettingsPanel):
