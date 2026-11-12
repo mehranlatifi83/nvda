@@ -21320,3 +21320,15 @@ msgctxt "remote"
 msgid "Remote NVDA not connected"
 msgstr "NVDA از راهِ دور متصل نیست"
 
+
+msgid "overtype on"
+msgstr "بازنویسی روشن"
+
+msgid "overtype off"
+msgstr "بازنویسی خاموش"
+
+msgid "&Pass the NVDA key to the system when pressed twice"
+msgstr "با دوبار فشردن، کلید NVDA به &سیستم فرستاده شود"
+
+msgid "Report when the &insert key is passed to the system"
+msgstr "اعلام فرستادن کلید &insert به سیستم"
