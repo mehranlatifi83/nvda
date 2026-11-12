@@ -1162,6 +1162,9 @@ dictSourcePath: SCons.Node.FS.Dir = espeakRepo.Dir("dictsource")
 for dictFileName, (langCode, inputFiles) in espeakDictionaryCompileList.items():
 	if langCode in excludeLangs:
 		continue
+	# Skip languages this (older) eSpeak NG checkout doesn't provide.
+	if not os.path.isfile(dictSourcePath.File(f"{langCode}_rules").abspath):
+		continue
 
 	dictFilePath = espeakRepo.Dir("espeak-ng-data").File(dictFileName)
 
