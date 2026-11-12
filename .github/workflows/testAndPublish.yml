@@ -843,3 +843,42 @@ jobs:
         # Reference: https://aka.ms/winget-create-token
         WINGET_CREATE_GITHUB_TOKEN: ${{ secrets.WINGET_CREATE_GITHUB_TOKEN }}
       run: ci/scripts/submitWinGet.ps1
+
+  postToTelegram:
+    name: Post launcher to Telegram channel
+    runs-on: ubuntu-latest
+    needs: [createLauncher]
+    if: startsWith(github.ref_name, 'try-')
+    steps:
+    - name: Download launcher
+      uses: actions/download-artifact@v7
+      with:
+        pattern: 'NVDA launcher (*'
+        path: launcher
+        merge-multiple: true
+    - name: Send to channel
+      env:
+        TG_API_ID: ${{ secrets.TG_API_ID }}
+        TG_API_HASH: ${{ secrets.TG_API_HASH }}
+        TG_BOT_SESSION: ${{ secrets.TG_BOT_SESSION }}
+        TG_CHANNEL_ID: ${{ secrets.TG_CHANNEL_ID }}
+      run: |
+        pip install telethon==1.40.0
+        python - <<'PY'
+        import asyncio, glob, os
+        from telethon import TelegramClient
+        from telethon.sessions import StringSession
+        from telethon.errors import TypeNotFoundError
+        exe = [f for f in glob.glob("launcher/nvda*.exe")][0]
+        caption = "نسخه رسمی بر پایه NVDA 2026.3.1 با espeak نسخه 2025.2\n@mehran_latifi"
+        async def main():
+            c = TelegramClient(StringSession(os.environ["TG_BOT_SESSION"]), int(os.environ["TG_API_ID"]), os.environ["TG_API_HASH"])
+            await c.connect()
+            try:
+                await c.send_file(int(os.environ["TG_CHANNEL_ID"]), exe, caption=caption, force_document=True)
+            except TypeNotFoundError:
+                pass
+            await c.disconnect()
+        asyncio.run(main())
+        print("sent", os.path.basename(exe))
+        PY
